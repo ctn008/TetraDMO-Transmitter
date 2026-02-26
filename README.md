@@ -64,12 +64,12 @@ Có thể dùng push_button variable để điều khiển audio_source lúc nà
 Tương tự như vậy, có thể dùng push_button để điều khiển pluto_sink lúc này mới bắt đầu hoạt động ? PlutoTx chỉ transmit khi có các burst dữ liệu được gửi đến, theo tín hiệu BURST ACTIVE hay là sẽ để phát liên tục, nếu input = zero thì tự động không phát. Còn module IQ Encoder / IQ Mapping sẽ phải chịu trách nhiệm việc điều chế tín hiệu theo các bursts.
 
 4. WORKFLOW
-Khi nút PTT được bấm:
-start Frame Counter
- gửi đi DMAC_call_setup bursts, và
- gửi đi các speech bursts ở TN1
- Nếu là các burst 6, 12 thì gửi thêm DSB ở TN3
- Nếu là burst 18 thì gửi Dmac-Sync
+When the PTT button is pressed:
+- Start Frame Counter
+- Send DMAC_call_setup bursts
+- Send speech bursts on TN1
+- If burst numbers 6 and 12 → also send DSB on TN3
+- If burst number 18 → send DMAC-Sync
 
 ### DMO GroupCall setup sequence 
 
@@ -78,9 +78,12 @@ start Frame Counter
 ### Block Diagram  
 ![image](https://github.com/user-attachments/assets/4baf6ebf-0444-4bd7-bf9d-24bff403059f)
 
-pi4DQPSK Modulator:
-Đã triển khai ok trên python block.
-- Qua kiểm tra thực tế, máy thu Tetra chỉ quan tâm decode tín hiệu mà không quan tâm đến khe thời gian hay tín hiệu nhiễu gì cả. Nếu để điều chế IQ liên tục, và phát đi cả các inactive burst (như tín hiệu TMO) thì máy bộ đàm tetra vẫn thu bình thường. Như vậy máy thu Tetra sau khi đồng bộ được thời gian với nguồn phát, thì chỉ quan tâm đến khe thời gian của mình và mặc kệ các đoạn tín hiệu bên ngoài có nhiễu hay không nhiễu
-- các tín hiệu guard symbols có thể để hoặc cắt đi cũng không ảnh hưởng đến khả năng thu
-- Có thể điều chế IQ theo từng burst, hoặc điều chế IQ cho cả chuỗi tín hiệu (cả inactive burst), và zerorize các inactive burst, để phát không gây nhiễu.
+pi4DQPSK Modulator: Successfully implemented in a Python block.
 
+Practical observations during testing:
+- The TETRA receiver only cares about decoding its intended signal and does not care about time slots or interference.
+- If IQ is modulated continuously, including inactive bursts (like TMO signals), the TETRA handset still receives normally.
+- After synchronizing timing with the transmitter, the TETRA handset only processes its assigned time slot and ignores other signals, whether noisy or not.
+- Guard symbols can be kept or removed without affecting reception performance.
+- IQ can be modulated per burst, or continuously across the entire signal (including inactive bursts).
+- Inactive bursts can be zeroed out to avoid unnecessary interference during transmission.
