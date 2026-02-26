@@ -31,21 +31,14 @@ It encodes and transmits audio signals in DMO mode, which can be received and pl
 4. Run the GNU Radio flowgraph / transmitter application.  
 
 ## 📊 Results
-
 - Encoded and transmitted audio via TETRA DMO
-
 - Audio successfully received on a TETRA handset
 
 ## 📚 Learning & Contribution
-
 - RF transmission and SDR integration
-
 - Digital modulation and TETRA DMO protocol
-
 - SDR development in Python and C++
-
 - End-to-end system testing and validation
-
 ---
 
 ## Additional Notes
@@ -72,10 +65,6 @@ When the PTT button is pressed:
 - Send speech bursts on TN1
 - If burst numbers 6 and 12 → also send DSB on TN3
 - If burst number 18 → send DMAC-Sync
-
-### DMO GroupCall setup sequence 
-
-### DMO GroupCall terminate sequence
 
 ### Block Diagram  
 ![image](https://github.com/user-attachments/assets/4baf6ebf-0444-4bd7-bf9d-24bff403059f)
