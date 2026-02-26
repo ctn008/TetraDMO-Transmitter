@@ -53,16 +53,18 @@ It encodes and transmits audio signals in DMO mode, which can be received and pl
 The project aims to implement a TETRA DMO transmitter using a PlutoSDR device, GNU Radio toolkit, and custom Python/C++ blocks; successfully encoded, modulated and transmitted voice from PC microphone; audio received live on a TETRA handset.
 
 1. USER_INTERFACE
-Thiết kế trên GNURadio, đầu vào là mic. 
-Sử dụng QT GUI Push Button làm PTT button
-Cho phép chọn TalkGroup
+- Designed in GNU Radio, with microphone as input.
+- Use a QT GUI Push Button as the PTT (Push-To-Talk) button.
+- Allow TalkGroup selection.
 
-2. AUDIO_SOURCE:
-Có thể dùng push_button variable để điều khiển audio_source lúc này mới bắt đầu hoạt động ? Nếu không thì cũng sẽ điều khiển để source encoder chỉ hoạt động khi có push_button ON.
+2. AUDIO_SOURCE
+- Can the push_button variable be used to control the audio_source so that it only starts operating when the button is pressed?
+- If not, then control should instead be applied so that the source encoder only operates when push_button is ON.
 
 3. PlutoTx_SINK
-Tương tự như vậy, có thể dùng push_button để điều khiển pluto_sink lúc này mới bắt đầu hoạt động ? PlutoTx chỉ transmit khi có các burst dữ liệu được gửi đến, theo tín hiệu BURST ACTIVE hay là sẽ để phát liên tục, nếu input = zero thì tự động không phát. Còn module IQ Encoder / IQ Mapping sẽ phải chịu trách nhiệm việc điều chế tín hiệu theo các bursts.
-
+- Similarly, is it possible to use the push_button to control the pluto_sink so that it only starts operating when the button is pressed?
+- Does PlutoTx transmit only when burst data is sent to it (based on a BURST ACTIVE signal), or does it transmit continuously — and if the input is zero, automatically not radiate?
+- The IQ Encoder / IQ Mapping module should be responsible for modulating signals according to burst timing.
 4. WORKFLOW
 When the PTT button is pressed:
 - Start Frame Counter
